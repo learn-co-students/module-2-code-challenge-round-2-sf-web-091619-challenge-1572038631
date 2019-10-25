@@ -10,18 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170309163029) do
+ActiveRecord::Schema.define(version: 20191025214040) do
 
   create_table "episodes", force: :cascade do |t|
-    t.date     "date"
-    t.integer  "number"
+    t.date "date"
+    t.integer "number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  create_table "episodes_guests", id: false, force: :cascade do |t|
+    t.integer "guest_id", null: false
+    t.integer "episode_id", null: false
+    t.index ["episode_id", "guest_id"], name: "index_episodes_guests_on_episode_id_and_guest_id"
+    t.index ["guest_id", "episode_id"], name: "index_episodes_guests_on_guest_id_and_episode_id"
+  end
+
   create_table "guests", force: :cascade do |t|
-    t.string   "name"
-    t.string   "occupation"
+    t.string "name"
+    t.string "occupation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
